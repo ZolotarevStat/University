@@ -1,0 +1,104 @@
+---
+title: "MSM_class14"
+author: ""
+date: "30.11.2020"
+output: html_document
+---
+
+```{r}
+library(rio)
+library(rpart) 
+library(rpart.plot)
+library(htmlTable)
+library(MLmetrics)
+```
+
+### Дерево решений для задачи регрессии
+
+Импорт данных:
+```{r}
+getwd()
+setwd(C:\Users\Дом\Downloads)
+```
+
+```{r}
+data <- import('flats_moscow.xlsx')
+data$price <- data$price * 77 / 10
+data <- data[, c('price', 'totsp', 'livesp', 'kitsp', 'dist', 'metrdist', 'walk', 'brick', 'floor')]
+data$walk <- as.factor(data$walk)
+data$brick <- as.factor(data$brick)
+data$floor <- as.factor(data$floor)
+str(data)
+```
+
+Делим имеющуюся выборку на обучающую и тестовую:
+```{r}
+set.seed(123)
+sample <- sample.int(n = nrow(data), size = floor(0.75*nrow(data)), replace = F)
+train <- data[sample, ]
+test  <- data[-sample, ]
+```
+
+Построение дерева решений:
+```{r}
+tree <- rpart(price ~ ., train, method = 'anova' )
+tree
+```
+
+* отмечены терминальные вершины (листы)
+
+В корневой вершине сначала ветвление идет по признаку totsp с порогом 97.5. В левую дочернюю вершину попали 1425 наблюдений, в правую 105 наблюдений. 1425 наблюдений затем деляется по этому же признаку с порогом 67.5, а затем еще раз с порогом 62.5. Квартиры с общей площадью < 62.5 (407 наблюдений) попали в листовую вершину (выполнено условие останова), таким квартирам предсказано значение цены 699.41. Квартирам с общей площадью >= 62.5, но < 67.5 алгоритм предсказывает цену 833.89, и т.д.
+
+```{r}
+summary(tree)
+```
+
+Визуализация:
+```{r}
+rpart.plot(tree)
+```
+
+В листах дерева указаны предсказания цены и процент наблюдений обучающей выборки, попавших в этот лист.
+
+Или другой вариант визуализации дерева:
+```{r}
+rpart.plot(tree, type = 3, clip.right.labs = FALSE, branch = .3, under = TRUE)
+prp(tree, box.palette = c("pink", "palegreen3"))
+```
+
+И еще один:
+```{r}
+# return the given node and all its ancestors (a vector of node numbers)
+path.to.root <- function(node){
+if (node == 1) # root?
+  node
+else
+# recurse, %/% 2 gives the parent of node 
+  c(node, path.to.root(node %/% 2))
+}
+node <- 21 # 21 is our chosen node, arbitrary for this example 
+nodes <- as.numeric(row.names(tree$frame))
+cols <- ifelse(nodes %in% path.to.root(node), "blue", "grey")
+prp(tree, nn = TRUE, col = cols, branch.col = cols, split.col = cols, nn.col = cols)
+```
+
+Результат построения дерева регрессии в виде таблицы:
+```{r}
+htmlTable(rpart.roots(tree)) #тут может быть что-то не так не успела посмотреть, а пакет rpart не хотел скачиваться :(
+```
+
+Оценим качество дерева регрессии:
+```{r}
+preds <- predict(tree, test)
+head(preds, 5)
+```
+
+```{r}
+RMSE(preds, test$price)
+```
+
+Сравним с качеством линейной регрессии:
+```{r}
+lm <- lm(price ~ ., train)
+RMSE(predict(lm, test), test$price)
+```

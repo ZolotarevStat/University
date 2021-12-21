@@ -1,0 +1,276 @@
+---
+title: "Семинар 4"
+author: "Многомерные статистические методы -- 4-й сем. 2020-21 гг. -- 3 курс"
+date: "28.09.2020"
+output:
+  html_document:
+    df_print: paged
+  pdf_document:
+    df_print: paged
+lang: ru-russian
+---
+
+В этом семинаре рассмотрим возможности реализации корреляционного анализа данных в R:
+
+* построение диаграмм рассеяния (scatterplot)
+
+* оценка парного и частного коэффициента корреляции, проверка на значимость
+
+* оценка корреляционной матрицы
+
+### Загрузка пакетов и данных
+
+Чтобы определить рабочую директорию текущей сессии и установить ее, где нужно, используем функции:
+```{r}
+getwd()
+setwd('C:/Users/481/Documents/R/MSM/Sem2')
+```
+
+Для реализации методов корреляционного анализа нам понадобятся пакеты: `ggpubr`, `Hmisc`, `corrplot`, `ppcor`
+
+```{r message=FALSE, warning=FALSE}
+#install.packages("ggpubr")
+#install.packages("Hmisc")
+#install.packages("corrplot")
+#install.packages("ppcor")
+
+library("ggpubr")
+library("Hmisc")
+library(corrplot)
+library(ppcor)
+```
+
+Упражняемся на данных с прошлого семинара о ценах на квартиры в Москве, размещенных ВШЭ в открытом доступе на платформе [Kaggle](https://www.kaggle.com/hugoncosta/price-of-flats-in-moscow).
+
+Исходный файл дан в формате `csv`, размещаем его в рабочей директории. Используем стандартную функцию для чтения данных:
+```{r}
+data <- read.csv('flats_moscow.csv')
+data
+```
+
+### Корреляционный анализ
+
+Какой вопрос может стоять перед исследователем с таким набором данных?
+
+Пример стандартной задачи для применения подходов машинного обучения: наиболее точное предсказание цены на квартиру в Москве.
+
+Эконометрический вопрос -- в какой степени цена квартиры обусловлена определенным фактором? Попытку дать ответ на такой вопрос можно на примере рынка квартир в Москве.
+
+В любом случае исследователь перед непосредственным решением стоящей перед ним задачи должен провести предварительный анализ имеющихся данных. Мы рассмотрели этапы разведочного анализа в одномерном случае на семинаре 2. При многомерном анализе все эти этапы необходимо провести с каждой переменной в отдельности. Следующий этап - изучение связей между переменными. Для этого используем методы корреляционного анализа.
+
+Напоминаем имеющийся набор переменных:
+
+Обозначение переменной | Переменная
+------------- | -------------
+price | цена квартиры, $ 1 000
+totsp | общая площадь квартиры, кв.м.
+livesp | жилая площадь квартиры, кв.м.
+kitsp | площадь кухни, кв.м.
+dist | расстояние от центра в км.
+metrdist | расстояние до метро в минутах
+walk | 1 – пешком от метро, 0 – на транспорте
+brick | 1 – кирпичный, монолит ж/б, 0 – другой
+floor | 1 – этаж кроме первого и последнего, 0 – иначе
+
+Структура данных:
+
+```{r}
+str(data) # X - порядковый номер
+```
+
+Нет смысла переводить единицы измерения из $ в руб., так как это не влияет на значение коэффициента корреляции, однако имеет смысл провести логарифмирование, самое частое линеаризующее преобразование. Далее будем рассматривать пример изучения связи между ценой и общей площадью.
+
+```{r}
+# один способ добавления новой переменной:
+l_price <- log(data$price)
+data <- cbind(data, l_price)
+
+# второй способ:
+data$l_totsp <- log(data$totsp)
+
+str(data)
+```
+
+### Диаграммы рассеяния
+
+Начинаем с визуального анализа связи. Нас волную два вопроса: тип связи (линейная или нелинейная), теснота связи.
+
+Для этого строим диаграммы рассеяния (поле или облако корреляции, scatterplot). Можно воспользоваться базовой функцией:
+```{r}
+plot(data$price, data$totsp)
+```
+
+Но куда удобнее функция `ggscatter`, которая позволяет:
+
+* нанести вектор выборочных средних
+
+* нанести концентрический эллипс, соответствующий двумерному нормальному распределению с значениями параметров, соответствующими оцененным по выборке
+
+* рассмотреть влияние уровней категориального признака на вид и тесноту связи
+
+```{r}
+ggscatter(data, x ="totsp", y="price", xlab="Общая площадь", ylab= "цена" ,mean.point = TRUE, ellipse = TRUE, ellipse.type = 'norm', ellipse.level = 0.95, color="cyan")
+```
+
+После линеаризующего преобразования:
+
+```{r}
+ggscatter(data, x="l_totsp", y="l_price", mean.point = TRUE, ellipse = TRUE, ellipse.type = 'norm')
+
+```
+Также, если есть необходимость, можно рассмотреть влияние уровней категориального признака на вид и тесноту связи, например, номер этаж:
+
+```{r}
+ggscatter(data, x="l_totsp", y="l_price", facet.by="floor", panel.labs = list(floor=c("Первый и последний этаж", "Кроме первого и последнего")), 
+          mean.point = TRUE, ellipse = TRUE, ellipse.type='euclid')
+```
+
+Мы не рассматриваем применение статистических тестов для проверки гипотезы о многомерном нормальном распределении совокупности, а пока ограничимся тем, что для неотвержения гипотезы будем проверять гипотезы о соответствии маргинальных распределений $x_1, x_2, \dots, x_k$ нормальному закону, а для двумерных маргинальных распределений строить диаграммы рассеяния: при истинности гипотезы облако точек имеет вытянутую форму, точки группируются около некоторой прямой.
+
+### Оценка коэффициентов корреляции, проверка значимости
+
+Парный коэффициент корреляции между ценой и общей площадью, проверка его значимости:
+```{r}
+cor(data$price, data$totsp, method = "pearson")
+cor.test(data$price, data$totsp, method = "pearson")
+```
+
+Диаграмма рассеяния для цены и общей площади с нанесением выборочного коэффициента корреляции с p-value и линии регрессии с доверительным интервалом:
+
+```{r}
+ggscatter(data, x="l_totsp", y="l_price", cor.coef=TRUE, add="reg.line", conf.int = TRUE)
+```
+
+Матрица диаграмм рассеяния для количественных переменных:
+```{r}
+data_cont <- data[, c("l_price", "l_totsp","livesp", "kitsp","dist","metrdist")]
+pairs(data_cont)
+```
+
+Корреляционная матрица с коэффициентами парной корреляции для количестванных переменных:
+```{r}
+cor_m1 <- cor(data_cont,method="pearson")
+cor_m1
+```
+
+Корреляционная матрица для количестванных переменных с уровнями значимости:
+```{r}
+cor_m2 <- rcorr(as.matrix(data_cont), type="pearson")
+cor_m2
+```
+
+Удобный инструмент визуализации результатов корреляционного анализа:
+```{r}
+corrplot.mixed(cor(data_cont), lower.col = 'blue', upper='pie')
+```
+
+```{r}
+corrplot(cor(data_cont),type="full", method="pie", tl.col="black", tl.srt=45)
+```
+
+Комбинируем оценку корреляционной матрицы с результатами тестов на значимость:
+
+```{r}
+res <- cor.mtest(data_cont, conf.level=0.95)
+corrplot(cor(data_cont), p.mat=res$p, sig.level=0.05)
+ # insig = 'blank' 'p-value', sig.level = -1
+```
+
+```{r}
+corrplot(cor(data_cont), p.mat=res$p, pch.col="black",pch="p<0.05", pch.cex=0.7, insig="label_sig")
+ # cex - масштаб текста
+```
+
+Функция, которая поможет построить матрицу корреляций со значимостью:
+```{r}
+corstars <- function(x, method=c("pearson", "spearman"), removeTriangle=c("upper", "lower"),
+                     result=c("none", "html", "latex")){
+    #Compute correlation matrix
+    require(Hmisc)
+    x <- as.matrix(x)
+    correlation_matrix<-rcorr(x, type=method[1])
+    R <- correlation_matrix$r # Matrix of correlation coeficients
+    p <- correlation_matrix$P # Matrix of p-value 
+    
+    ## Define notions for significance levels; spacing is important.
+    mystars <- ifelse(p < .0001, "****", ifelse(p < .001, "*** ", ifelse(p < .01, "**  ", ifelse(p < .05, "*   ", "    "))))
+    
+    ## trunctuate the correlation matrix to two decimal
+    R <- format(round(cbind(rep(-1.11, ncol(x)), R), 2))[,-1]
+    
+    ## build a new matrix that includes the correlations with their apropriate stars
+    Rnew <- matrix(paste(R, mystars, sep=""), ncol=ncol(x))
+    diag(Rnew) <- paste(diag(R), " ", sep="")
+    rownames(Rnew) <- colnames(x)
+    colnames(Rnew) <- paste(colnames(x), "", sep="")
+    
+    ## remove upper triangle of correlation matrix
+    if(removeTriangle[1]=="upper"){
+      Rnew <- as.matrix(Rnew)
+      Rnew[upper.tri(Rnew, diag = TRUE)] <- ""
+      Rnew <- as.data.frame(Rnew)
+    }
+    
+    ## remove lower triangle of correlation matrix
+    else if(removeTriangle[1]=="lower"){
+      Rnew <- as.matrix(Rnew)
+      Rnew[lower.tri(Rnew, diag = TRUE)] <- ""
+      Rnew <- as.data.frame(Rnew)
+    }
+    
+    ## remove last column and return the correlation matrix
+    Rnew <- cbind(Rnew[1:length(Rnew)-1])
+    if (result[1]=="none") return(Rnew)
+    else{
+      if(result[1]=="html") print(xtable(Rnew), type="html")
+      else print(xtable(Rnew), type="latex") 
+    }
+}
+```
+
+Матрица корреляций со значимостью:
+```{r}
+mcor <- round(cor(data_cont), 2)
+mcor
+corstars(data_cont)
+```
+
+Частные коэффициенты корреляции:
+```{r}
+cor_p <- pcor(data_cont) #частные коэффициенты корреляции
+cor_p$estimate
+cor_p$p.value
+```
+
+
+### Самостоятельная работа
+
+1. Удалите наблюдения, которые являются нетипичными по правилу 3IQR
+
+2. Постройте выборочную матрицу корреляций без этих наблюдений
+
+3. Проинтерпретируйте полученные оценки коэффициентов и сравните их с полученными результатами на исходном массиве данных
+
+```{r}
+#Q1-3*IQR, Q3+3*IQR
+out_of_3IQR <- boxplot.stats(data$price, coef=3)$out 
+out_of_3IQR_ind <- which(data$price %in% out_of_3IQR)
+```
+
+```{r}
+clearData <- data[-out_of_3IQR_ind, ]
+```
+
+```{r}
+data_cont <- clearData[, c("l_price", "l_totsp","livesp", "kitsp","dist","metrdist")]
+cor_m1 <- cor(data_cont,method="pearson")
+cor_m1
+```
+
+```{r}
+data_cont <- data[, c("l_price", "l_totsp","livesp", "kitsp","dist","metrdist")]
+cor_m1 <- cor(data_cont,method="pearson")
+cor_m1
+```
+
+Видно, что все коэффициенты корреляции уменьшились после избавления от выборосов.
