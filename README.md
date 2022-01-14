@@ -29,3 +29,101 @@ All programming homeworks that has been assigned to me during studying in HSE
 * 2. [Multiclass Classification & Object Detection](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20DL/HW2_Image_Classification_Object_Detection.ipynb)
 * 3. [Text Regression](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20DL/HW3_NLP.ipynb)
 
+## [Machine Learning-2](https://github.com/ZolotarevStat/University/tree/main/Machine%20Learning-2) 
+* IPYNB, 1st half of 2021
+* [Original course](http://wiki.cs.hse.ru/Машинное_обучение_2)
+* Topics: 
+* Methods: 
+* Libraries: 
+* HWs: 
+* 1. [Exploratory Analysis](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW1_numpy_pandas_matplotlib.ipynb)
+* 2. [House Prices Regression](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* 3. 123
+
+## [Data Analysis Applications](https://github.com/ZolotarevStat/University/tree/main/Data%20Analysis%20Applications) 
+* IPYNB, 1st half of 2021
+* [Original course](http://wiki.cs.hse.ru/Прикладные_задачи_анализа_данных)
+* Topics: 
+* Methods: 
+* Libraries: 
+* HWs: 
+* 1. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW1_numpy_pandas_matplotlib.ipynb)
+* 2. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* 3. 
+
+## [Applied Statistics in ML](https://github.com/ZolotarevStat/University/tree/main/Applied%20Statisctics%20in%20ML) 
+* IPYNB, 2nd half of 2021
+* [Original course](http://wiki.cs.hse.ru/Psmo_21_22)
+* Topics: 
+* Methods: 
+* Libraries: 
+* HWs: 
+* 1. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW1_numpy_pandas_matplotlib.ipynb)
+* 2. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* 3. 
+
+## [ML on Big Data](https://github.com/ZolotarevStat/University/tree/main/ML%20on%20Big%20Data) 
+* IPYNB, 1st half of 2022
+* [Original course](http://wiki.cs.hse.ru/LSML_2021/2022)
+* Topics: 
+* Methods: 
+* Libraries: 
+* HWs: 
+* 1. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW1_numpy_pandas_matplotlib.ipynb)
+* 2. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* 3. 
+
+## [Dynamic Optimization](https://github.com/ZolotarevStat/University/tree/main/Dynamic%20Optimization) 
+* IPYNB, 2nd half of 2021
+* [Original course](http://wiki.cs.hse.ru/Динамическая_оптимизация_в_экономике_и_финансах,_фэн,_2021/22)
+* Topics: 
+* Methods: 
+* Libraries: numpy, scipy, matplotlib, gekko
+* HW [Variational Calculus & Optimal Control](https://github.com/ZolotarevStat/University/blob/main/Dynamic%20Optimization/Dynamic_Optimization.ipynb)
+
+## [Data Mining](https://github.com/ZolotarevStat/University/tree/main/Data%20Mining) 
+* IPYNB, 2nd half of 2021
+* [Original course](https://www.hse.ru/edu/courses/339493317)
+* Topics: 
+* Methods: 
+* Libraries: 
+* HWs: 
+* 1. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW1_numpy_pandas_matplotlib.ipynb)
+* 2. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+
+## [Multidimensional Statistics Methods](https://github.com/ZolotarevStat/University/tree/main/Multidimensional%20Statistics%20Methods) 
+* R-markdown, 2nd half of 2020
+* [Original course](https://www.hse.ru/edu/courses/292685006)
+* Topics: 
+* Methods: 
+* Libraries: 
+* HWs: 
+* 1. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW1_numpy_pandas_matplotlib.ipynb)
+* 2. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* Mini-HWs:
+* 1. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* 2. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* 3. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* 4. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+* 5. [text](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
+
+## [Course Work 2](https://github.com/ZolotarevStat/University/tree/main/Course%20Work_2) 
+* IPYNB, 2nd half of 2021
+* [Advisor](https://www.hse.ru/org/persons/10586209)
+* Topics: 
+* Methods: 
+* Libraries: 
+
+## [Course Work 3](https://github.com/ZolotarevStat/University/tree/main/Course%20Work%203) 
+* IPYNB, 2nd half of 2021
+* [Advisor](https://www.hse.ru/org/persons/11532263)
+* Topics: 
+* Methods: 
+* Libraries: 
+
+## [Diploma](https://github.com/ZolotarevStat/University/tree/main/Diploma) 
+* IPYNB, 2nd half of 2021
+* [Advisor](https://www.hse.ru/staff/lukianchenko)
+* Topics: 
+* Methods: 
+* Libraries:
