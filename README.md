@@ -32,13 +32,15 @@ All programming homeworks that has been assigned to me during studying in HSE
 ## [Machine Learning-2](https://github.com/ZolotarevStat/University/tree/main/Machine%20Learning-2) 
 * IPYNB, 1st half of 2021
 * [Original course](http://wiki.cs.hse.ru/Машинное_обучение_2)
-* Topics: 
-* Methods: 
-* Libraries: 
+* Topics & Methods: Kernels, Random Features Generation, EM-algorithm, Anomaly Detection, Imbalanced Learning, Clustering, Semi-supervised Learning, KNN (NSW, LSH), Ranking, RecSys, AutoML, NN for table data 
+* Libraries: xml, folium, nltk, metric_learn, imblearn, h5py (also scipy, numpy, sklearn, pandas, xgboost, catboost)
 * HWs: 
-* 1. [Exploratory Analysis](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW1_numpy_pandas_matplotlib.ipynb)
-* 2. [House Prices Regression](https://github.com/ZolotarevStat/University/blob/main/Intro%20to%20ML/HW2_regression.ipynb)
-* 3. 123
+* 1. [Random Features Methods](https://github.com/ZolotarevStat/University/blob/main/Machine%20Learning-2/HW1_random_features.ipynb)
+* 2. [EM-algorithm implementation](https://github.com/ZolotarevStat/University/blob/main/Machine%20Learning-2/HW2_em_algorithm.ipynb)
+* 3. [Clustering Methods on Geodata & Texts](https://github.com/ZolotarevStat/University/blob/main/Machine%20Learning-2/HW3_clustering.ipynb)
+* 4. [Metrics on KNN](https://github.com/ZolotarevStat/University/blob/main/Machine%20Learning-2/HW4_knn.ipynb)
+* 5. [Imbalanced Classification](https://github.com/ZolotarevStat/University/blob/main/Machine%20Learning-2/HW5_imbalanced.ipynb)
+* 6. [Advanced KNN methods](https://github.com/ZolotarevStat/University/blob/main/Machine%20Learning-2/HW6_KNN_LSH.ipynb)
 
 ## [Data Analysis Applications](https://github.com/ZolotarevStat/University/tree/main/Data%20Analysis%20Applications) 
 * IPYNB, 1st half of 2021
