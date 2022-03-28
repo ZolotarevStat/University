@@ -72,10 +72,10 @@ All programming homeworks that has been assigned to me during studying in HSE
 * Methods: MapReduce, Hadoop, Spark, Hash tricks
 * Tools: bash, yandex-cloud, hadoop, pyspark, vowpal wabbit 
 * HWs: 
-* 1. [MHW-1](https://github.com/ZolotarevStat/University/blob/main/ML%20on%20Big%20Data/MHW_1_Bash_Cloud.ipynb)
-* 2. [MHW-2](https://github.com/ZolotarevStat/University/blob/main/ML%20on%20Big%20Data/MHW_2_Hadoop_Spark.ipynb)
-* 3. [MHW-3](https://github.com/ZolotarevStat/University/blob/main/ML%20on%20Big%20Data/MHW_3_Classic_Models.ipynb)
-* 4. [Final Project](https://github.com/ZolotarevStat/University/blob/main/ML%20on%20Big%20Data/BigHW_Outbrain_Click_Prediction.ipynb)
+* 1. [HW1](https://github.com/ZolotarevStat/University/blob/main/ML%20on%20Big%20Data/MHW_1_Bash_Cloud.ipynb) - basic concepts of bash & Yandex.Cloud
+* 2. [HW2](https://github.com/ZolotarevStat/University/blob/main/ML%20on%20Big%20Data/MHW_2_Hadoop_Spark.ipynb) - data analysis using Hadoop MapReduce & Apache Spark
+* 3. [HW3](https://github.com/ZolotarevStat/University/blob/main/ML%20on%20Big%20Data/MHW_3_Classic_Models.ipynb) - build dataset & build logistic regression using Vowpal Wabbit
+* 4. [Final Project](https://github.com/ZolotarevStat/University/blob/main/ML%20on%20Big%20Data/BigHW_Outbrain_Click_Prediction.ipynb) - participation in finished Kaggle Competition on Outbrain Click Prediction
 
 ## [Dynamic Optimization](https://github.com/ZolotarevStat/University/tree/main/Dynamic%20Optimization) 
 * IPYNB, Excel, 2nd half of 2021
